@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Form</title>
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- style -->
+    <link rel="stylesheet" href="./style.css">
+
+    <!-- script -->
+    <script src="https://kit.fontawesome.com/417a707368.js" crossorigin="anonymous"></script>
+    <script defer src="./main.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <form id="form">
+            <h1>Form</h1>
+            <div class="form__grop">
+                <input class="form__input" placeholder="name:" type="text" name="name">
+            </div>
+
+            <div class="form__grop">
+                <input class="form__input" placeholder="age:" type="number" name="age">
+            </div>
+
+            <div class="form__grop">
+                <textarea class="form__input form__input-textarea" placeholder="message:" name="message" id=""></textarea>
+            </div>
+
+            <div class="form__grop form__grop-checkbox">
+                <input class="form__input-checkbox" id="checkbox" type="checkbox" name="agreement">
+                <label class="checkbox__label" for="checkbox">Agree to the terms</label>
+
+            </div>
+
+            <button class="btn">submit</button>
+
+            <h2 class="send">form sent</h2>
+        </form>
+    </div>
+
+    <div class="modal">
+        <i class="modal__close fa-sharp fa-solid fa-xmark"></i>
+        <div class="modal__wrap">
+            <h4 class="modal__title">Data sent</h4>
+            <div class="modal__subtitle">You will be contacted shortly</div>
+        </div>
+    </div>
+    <div class="modal__background"></div>
+</body>
+</html>
