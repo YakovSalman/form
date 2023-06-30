@@ -8,7 +8,7 @@ body {
 
     color: #fff;
     background-color: rgb(115, 187, 255);
-
+    overflow: hidden;
     margin: 0;
 }
 h1,
