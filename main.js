@@ -1,7 +1,8 @@
 const isCheckboxOrRadio = type => ['checkbox', 'radio'].includes(type);
+
 const {form} = document.forms;
 
-function retrieveFormValue() {
+const retrieveFormValue = () => {
     const values = {};
 
     for (let field of form) {
@@ -13,52 +14,57 @@ function retrieveFormValue() {
             values[name] = isCheckboxOrRadio(type) ? checked : value;
         }
     }
-    // console.log(values)
+
+    console.log(Object.entries(values) );
+
 }
-
-
 
 const formElem = document.querySelectorAll('#form');
 
 formElem.forEach(form => {
     const input = form.querySelectorAll('.form__input');
+    const textarea = form.querySelectorAll('.form__input-textarea');
     const inputCheckbox = form.querySelectorAll('.form__input-checkbox');
     const label = form.querySelectorAll('.checkbox__label');
-    const send = form.querySelectorAll('.send');
-
+    const modalElem = document.querySelectorAll('.modal');
+    let isSubmit = true;
 
     const submit = () => {
-        input.forEach(input => {
-            inputCheckbox.forEach(check => {
-                if(
-                    input.value != '' &&
-                    check.checked
-                ) {
-                    modal()
-                } else {
-                    send.forEach(item => {
-                        item.classList.remove('active');
-                    })
-                }
-            })
-        });
 
-        form.reset();
+        modalElem.forEach(modal => {
+            const modalClose = modal.querySelector('.modal__close');
+            const modalBackground = document.querySelector('.modal__background');
+            modal.classList.add('active');
+            modalBackground.classList.add('active');
+
+            modalClose.addEventListener('click', () => {
+                modal.classList.remove('active');
+                modalBackground.classList.remove('active');
+            })
+
+            modalBackground.addEventListener('click', () => {
+                modal.classList.remove('active');
+                modalBackground.classList.remove('active');
+            });
+            form.reset()
+        })
     }
 
-    input.forEach(input => {
-        input.addEventListener('blur', () => {
-            if(input.value !== '' || input.value === '') {
-                input.classList.remove('active');
+    input.forEach(elem => {
+        elem.addEventListener('blur', () => {
+            if(elem.value !== '' || elem.value === '') {
+                elem.classList.remove('active');
+                isSubmit = true;
+                return
             } else {
-                input.classList.add('active');
+                elem.classList.add('active');
             }
         })
     });
-    inputCheckbox.forEach(checkbox => {
-        checkbox.addEventListener('change', () => {
+    inputCheckbox.forEach(check => {
+        check.addEventListener('change', () => {
             label.forEach(label => {
-                if(checkbox.checked) {
+                if(check.checked) {
                     label.style.color = 'white'
                 }
             });
@@ -66,20 +72,22 @@ formElem.forEach(form => {
         })
     })
     form.addEventListener('submit', (e) => {
-        e.preventDefault()
-        retrieveFormValue()
+        e.preventDefault();
+        retrieveFormValue();
 
-        input.forEach(input => {
-            if(input.value == '') {
-                input.classList.add('active')
+        input.forEach(elem => {
+            if(elem.value === "") {
+                elem.classList.add('active')
+                isSubmit = false;
+                return
             } else {
-                input.classList.remove('active')
+                elem.classList.remove('active')
             }
         })
 
-        inputCheckbox.forEach(checkbox => {
+        inputCheckbox.forEach(check => {
             label.forEach(label => {
-                if(!checkbox.checked) {
+                if(!check.checked) {
                     label.style.color = 'red'
                 } else {
                     label.style.color = 'white'
@@ -88,31 +96,14 @@ formElem.forEach(form => {
 
         })
 
-        submit()
-
+        if(isSubmit) {
+            inputCheckbox.forEach(check => {
+                if(check.checked) {
+                    submit()
+                } else {
+                    alert("Confirmation of agreement with the terms");
+                }
+            })
+        }
     });
-
 })
-
-
-
-function modal () {
-    const modal = document.querySelectorAll('.modal');
-
-    modal.forEach(modal => {
-        const modalClose = modal.querySelector('.modal__close');
-        const modalBackground = document.querySelector('.modal__background');
-        modal.classList.add('active');
-        modalBackground.classList.add('active');
-
-        modalClose.addEventListener('click', () => {
-            modal.classList.remove('active');
-            modalBackground.classList.remove('active');
-        })
-
-        modalBackground.addEventListener('click', () => {
-            modal.classList.remove('active');
-            modalBackground.classList.remove('active');
-        });
-    })
-}
